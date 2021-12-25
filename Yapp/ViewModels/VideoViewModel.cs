@@ -17,8 +17,8 @@ namespace Yapp.ViewModels
 
         public MediaPlayer MediaPlayer
         {
-            get { return _mediaPlayer; }
-            set { SetProperty(ref _mediaPlayer, value); }
+            get => _mediaPlayer;
+            set => SetProperty(ref _mediaPlayer, value);
         }
 
         public ICommand InitializedCommand => _initializedCommand ?? (_initializedCommand = new RelayCommand<InitializedEventArgs>(OnInitialized));

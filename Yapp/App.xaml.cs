@@ -1,5 +1,8 @@
 ﻿using System;
 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
@@ -11,16 +14,16 @@ namespace Yapp
     {
         private Lazy<ActivationService> _activationService;
 
-        private ActivationService ActivationService
-        {
-            get { return _activationService.Value; }
-        }
+        private ActivationService ActivationService => _activationService.Value;
 
         public App()
         {
-            InitializeComponent();
+            Ioc.Default.ConfigureServices(
+                new ServiceCollection()
+                .AddSingleton<ISettingsService, SettingsService>()
+                .BuildServiceProvider());
 
-            //AppCenter.Start("{Your App Secret}", typeof(Analytics), typeof(Crashes));
+            InitializeComponent();
 
             _activationService = new Lazy<ActivationService>(CreateActivationService);
         }
