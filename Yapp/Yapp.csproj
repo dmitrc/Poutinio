@@ -130,6 +130,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Singleton.cs" />
+    <Compile Include="Helpers\XamlHelper.cs" />
     <Compile Include="Models\PutIO\AccountInfo.cs" />
     <Compile Include="Models\PutIO\AccountSettings.cs" />
     <Compile Include="Models\PutIO\Config.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Models\PutIO\Post__Zips_CreateResponse.cs" />
     <Compile Include="Models\PutIO\RssFeed.cs" />
     <Compile Include="Models\PutIO\Transfer.cs" />
+    <Compile Include="Models\UserChangedMessage.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Services\IPutIoService.cs" />
     <Compile Include="Services\ISettingsService.cs" />

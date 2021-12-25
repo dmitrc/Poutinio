@@ -7,6 +7,6 @@ namespace Yapp.Models
     public class Get__Files_UrlResponse
     {
         [JsonPropertyName("url")]
-        public string Url { get; set; }
+        public Uri Url { get; set; }
     }
 }

@@ -12,21 +12,22 @@ namespace Yapp
 {
     public sealed partial class App : Application
     {
+        private readonly string PutIoHost = "https://api.put.io/v2/";
+        private readonly RefitSettings RefitSettings = new RefitSettings()
+        { 
+            AuthorizationHeaderValueGetter = () => Task.FromResult(Ioc.Default.GetRequiredService<ISettingsService>().GetToken())
+        };
+
         private Lazy<ActivationService> _activationService;
 
         private ActivationService ActivationService => _activationService.Value;
-
-        public string PutIoToken = null;
 
         public App()
         {
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 .AddSingleton<ISettingsService, SettingsService>()
-                .AddSingleton(RestService.For<IPutIoService>("https://api.put.io/v2/", new RefitSettings()
-                {
-                    AuthorizationHeaderValueGetter = () => Task.FromResult(PutIoToken)
-                }))
+                .AddSingleton(RestService.For<IPutIoService>(PutIoHost, RefitSettings))
                 .BuildServiceProvider());
 
             InitializeComponent();

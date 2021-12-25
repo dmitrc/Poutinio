@@ -14,11 +14,18 @@ namespace Yapp.ViewModels
         private LibVLC _libVLC;
         private MediaPlayer _mediaPlayer;
         private ICommand _initializedCommand;
+        private Uri _fileUri;
 
         public MediaPlayer MediaPlayer
         {
             get => _mediaPlayer;
             set => SetProperty(ref _mediaPlayer, value);
+        }
+
+        public Uri FileUri
+        {
+            get => _fileUri;
+            set => SetProperty(ref _fileUri, value);
         }
 
         public ICommand InitializedCommand => _initializedCommand ?? (_initializedCommand = new RelayCommand<InitializedEventArgs>(OnInitialized));
@@ -37,8 +44,18 @@ namespace Yapp.ViewModels
             _libVLC = new LibVLC(enableDebugLogs: true, eventArgs.SwapChainOptions);
             MediaPlayer = new MediaPlayer(_libVLC);
 
-            using var media = new Media(_libVLC, new Uri("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"));
-            MediaPlayer.Play(media);
+            MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
+
+            if (FileUri != null)
+            {
+                using var media = new Media(_libVLC, FileUri);
+                MediaPlayer.Play(media);
+            }
+        }
+
+        private void MediaPlayer_EncounteredError(object sender, EventArgs e)
+        {
+            
         }
 
         public void Dispose()

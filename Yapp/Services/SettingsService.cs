@@ -3,17 +3,13 @@ using Windows.Storage;
 
 namespace Yapp.Services
 {
-    /// <summary>
-    /// A simple <see langword="class"/> that handles the local app settings.
-    /// </summary>
     public sealed class SettingsService : ISettingsService
     {
-        /// <summary>
-        /// The <see cref="IPropertySet"/> with the settings targeted by the current instance.
-        /// </summary>
         private readonly IPropertySet SettingsStorage = ApplicationData.Current.LocalSettings.Values;
 
-        /// <inheritdoc/>
+        private readonly string TokenKey = "AuthToken";
+        private string _cachedToken;
+
         public void SetValue<T>(string key, T value)
         {
             if (!SettingsStorage.ContainsKey(key))
@@ -26,7 +22,6 @@ namespace Yapp.Services
             }
         }
 
-        /// <inheritdoc/>
         public T GetValue<T>(string key)
         {
             if (SettingsStorage.TryGetValue(key, out object value))
@@ -35,6 +30,27 @@ namespace Yapp.Services
             }
 
             return default;
+        }
+
+        public void SetToken(string token)
+        {
+            SetValue(TokenKey, token);
+            _cachedToken = token;
+        }
+
+        public string GetToken()
+        {
+            if (string.IsNullOrEmpty(_cachedToken))
+            {
+                _cachedToken = GetValue<string>(TokenKey);
+            }
+
+            return _cachedToken;
+        }
+
+        public bool HasToken()
+        {
+            return !string.IsNullOrEmpty(GetToken());
         }
     }
 }
