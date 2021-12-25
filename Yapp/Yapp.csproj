@@ -201,6 +201,12 @@
       <Version>3.3.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PutIO\PutIO.csproj">
+      <Project>{82D6782E-EA16-4F8F-A470-89066E4F2460}</Project>
+      <Name>PutIO</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
