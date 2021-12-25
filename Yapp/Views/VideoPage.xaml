@@ -1,0 +1,20 @@
+﻿<Page
+    x:Class="Yapp.Views.VideoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:lvs="using:LibVLCSharp.Platforms.UWP"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <lvs:VideoView MediaPlayer="{x:Bind ViewModel.MediaPlayer, Mode=OneWay}">
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="Initialized">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.InitializedCommand}"/>
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+        </lvs:VideoView>
+    </Grid>
+    
+</Page>
