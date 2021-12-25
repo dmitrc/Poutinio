@@ -1,8 +1,8 @@
 ﻿using System;
-
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
-
+using Refit;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
@@ -16,11 +16,17 @@ namespace Yapp
 
         private ActivationService ActivationService => _activationService.Value;
 
+        public string PutIoToken = null;
+
         public App()
         {
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 .AddSingleton<ISettingsService, SettingsService>()
+                .AddSingleton(RestService.For<IPutIoService>("https://api.put.io/v2/", new RefitSettings()
+                {
+                    AuthorizationHeaderValueGetter = () => Task.FromResult(PutIoToken)
+                }))
                 .BuildServiceProvider());
 
             InitializeComponent();

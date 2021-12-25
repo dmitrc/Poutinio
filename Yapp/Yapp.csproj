@@ -130,7 +130,58 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Singleton.cs" />
+    <Compile Include="Models\PutIO\AccountInfo.cs" />
+    <Compile Include="Models\PutIO\AccountSettings.cs" />
+    <Compile Include="Models\PutIO\Config.cs" />
+    <Compile Include="Models\PutIO\ConfigValue.cs" />
+    <Compile Include="Models\PutIO\Error.cs" />
+    <Compile Include="Models\PutIO\Extraction.cs" />
+    <Compile Include="Models\PutIO\File.cs" />
+    <Compile Include="Models\PutIO\Friend.cs" />
+    <Compile Include="Models\PutIO\Get__Account_InfoResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Events_ListResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Events_ListResponse_Events.cs" />
+    <Compile Include="Models\PutIO\Get__FilesResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Files_ExtractResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Files_ListResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Files_Mp4Response.cs" />
+    <Compile Include="Models\PutIO\Get__Files_Mp4Response_Property_Mp4.cs" />
+    <Compile Include="Models\PutIO\Get__Files_SearchResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Files_Search_PageResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Files_SharedResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Files_SharedResponse_Shared.cs" />
+    <Compile Include="Models\PutIO\Get__Files_SharedWithResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Files_SharedWithResponse_SharedWith.cs" />
+    <Compile Include="Models\PutIO\Get__Files_StartFromResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Files_SubtitlesResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Files_SubtitlesResponse_Subtitles.cs" />
+    <Compile Include="Models\PutIO\Get__Files_UrlResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Friends_ListResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Friends_WaitingRequestsResponse.cs" />
+    <Compile Include="Models\PutIO\Get__RssResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Rss_ListResponse.cs" />
+    <Compile Include="Models\PutIO\Get__TransfersResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Transfers_ListResponse.cs" />
+    <Compile Include="Models\PutIO\Get__ZipsResponse.cs" />
+    <Compile Include="Models\PutIO\Get__ZipsResponse_MissingFiles.cs" />
+    <Compile Include="Models\PutIO\Get__Zips_ListResponse.cs" />
+    <Compile Include="Models\PutIO\Get__Zips_ListResponse_Zips.cs" />
+    <Compile Include="Models\PutIO\OAuthToken.cs" />
+    <Compile Include="Models\PutIO\OOBCode.cs" />
+    <Compile Include="Models\PutIO\Post__Files_CreateFolderResponse.cs" />
+    <Compile Include="Models\PutIO\Post__Files_ExtractResponse.cs" />
+    <Compile Include="Models\PutIO\Post__Files_List_ContinueResponse.cs" />
+    <Compile Include="Models\PutIO\Post__Files_Search_ContinueResponse.cs" />
+    <Compile Include="Models\PutIO\Post__RssResponse.cs" />
+    <Compile Include="Models\PutIO\Post__Rss_CreateResponse.cs" />
+    <Compile Include="Models\PutIO\Post__Transfers_AddResponse.cs" />
+    <Compile Include="Models\PutIO\Post__Transfers_CleanResponse.cs" />
+    <Compile Include="Models\PutIO\Post__Transfers_RetryResponse.cs" />
+    <Compile Include="Models\PutIO\Post__Zips_CreateResponse.cs" />
+    <Compile Include="Models\PutIO\RssFeed.cs" />
+    <Compile Include="Models\PutIO\Transfer.cs" />
     <Compile Include="Services\ActivationService.cs" />
+    <Compile Include="Services\IPutIoService.cs" />
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -197,15 +248,12 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Refit">
+      <Version>6.1.15</Version>
+    </PackageReference>
     <PackageReference Include="VideoLAN.LibVLC.UWP">
       <Version>3.3.1</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PutIO\PutIO.csproj">
-      <Project>{82D6782E-EA16-4F8F-A470-89066E4F2460}</Project>
-      <Name>PutIO</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
