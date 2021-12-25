@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Yapp.Models;
 using Yapp.Services;
 
@@ -36,7 +37,7 @@ namespace Yapp.ViewModels
             }
             else
             {
-                Messenger.Register<MainViewModel, UserChangedMessage, string>(this, "USER", (r, m) => StartLoading());
+                Messenger.Register<MainViewModel, UserChangedMessage>(this, (r, m) => StartLoading());
             }
         }
 

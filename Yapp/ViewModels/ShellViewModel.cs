@@ -6,6 +6,7 @@ using System.Windows.Input;
 
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Mvvm.Input;
 
 using Windows.UI.Core;
@@ -58,16 +59,29 @@ namespace Yapp.ViewModels
 
         private async void OnLoaded()
         {
-            if (!SettingsService.HasToken())
+            if (SettingsService.HasToken())
             {
-                NeedsLogin = true;
-
-                var codeResponse = await PutIoService.Get__Oauth2_Oob_Code(5430, null);
-                if (!string.IsNullOrEmpty(codeResponse?.Code))
+                try
                 {
-                    AuthCode = codeResponse.Code;
-                    StartPollingForAuthenticationToken();
+                    var accountResponse = await PutIoService.Get__Account_Info();
+                    if (!string.IsNullOrEmpty(accountResponse?.Info?.Username))
+                    {
+                        return;
+                    }
+
                 }
+                catch (Exception ex)
+                { 
+                }
+            }
+
+            NeedsLogin = true;
+
+            var codeResponse = await PutIoService.Get__Oauth2_Oob_Code(5430, null);
+            if (!string.IsNullOrEmpty(codeResponse?.Code))
+            {
+                AuthCode = codeResponse.Code;
+                StartPollingForAuthenticationToken();
             }
         }
         
@@ -88,7 +102,7 @@ namespace Yapp.ViewModels
                 _authPollTimer = null;
 
                 SettingsService.SetToken(tokenResponse.OauthToken);
-                Messenger.Send(new UserChangedMessage(), "USER");
+                Messenger.Send<UserChangedMessage>();
 
                 NeedsLogin = false;
             }
