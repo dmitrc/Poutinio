@@ -82,6 +82,15 @@ namespace Yapp.Services
             where T : Page
             => Navigate(typeof(T), parameter, infoOverride);
 
+        public static void Pop()
+        {
+            var count = Frame?.BackStack?.Count ?? 0;
+            if (count > 0)
+            {
+                Frame.BackStack.RemoveAt(count - 1);
+            }
+        }
+
         private static void RegisterFrameEvents()
         {
             if (_frame != null)

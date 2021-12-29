@@ -1,7 +1,4 @@
-﻿using System;
-
-using Windows.UI.Xaml.Controls;
-
+﻿using Windows.UI.Xaml.Controls;
 using Yapp.ViewModels;
 
 namespace Yapp.Views

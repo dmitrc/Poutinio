@@ -9,10 +9,11 @@ using Microsoft.Toolkit.Mvvm.Input;
 
 namespace Yapp.ViewModels
 {
-    public class VideoViewModel : ObservableObject
+    public class PlayerViewModel : ObservableObject
     {
         private LibVLC _libVLC;
         private MediaPlayer _mediaPlayer;
+        private ICommand _unloadedCommand;
         private ICommand _initializedCommand;
         private Uri _fileUri;
 
@@ -28,15 +29,12 @@ namespace Yapp.ViewModels
             set => SetProperty(ref _fileUri, value);
         }
 
+        public ICommand UnloadedCommand => _unloadedCommand ?? (_unloadedCommand = new RelayCommand(OnUnloaded));
+
         public ICommand InitializedCommand => _initializedCommand ?? (_initializedCommand = new RelayCommand<InitializedEventArgs>(OnInitialized));
 
-        public VideoViewModel()
+        public PlayerViewModel()
         {
-        }
-
-        ~VideoViewModel()
-        {
-            Dispose();
         }
 
         private void OnInitialized(InitializedEventArgs eventArgs)
@@ -58,7 +56,7 @@ namespace Yapp.ViewModels
             
         }
 
-        public void Dispose()
+        public void OnUnloaded()
         {
             var mediaPlayer = MediaPlayer;
             MediaPlayer = null;

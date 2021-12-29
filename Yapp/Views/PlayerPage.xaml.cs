@@ -7,11 +7,11 @@ using Yapp.ViewModels;
 
 namespace Yapp.Views
 {
-    public sealed partial class VideoPage : Page
+    public sealed partial class PlayerPage : Page
     {
-        public VideoViewModel ViewModel { get; } = new VideoViewModel();
+        public PlayerViewModel ViewModel { get; } = new PlayerViewModel();
 
-        public VideoPage()
+        public PlayerPage()
         {
             this.InitializeComponent();
         }

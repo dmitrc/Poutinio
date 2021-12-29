@@ -6,11 +6,11 @@ using Yapp.ViewModels;
 
 namespace Yapp.Views
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class LoginPage : Page
     {
-        public MainViewModel ViewModel { get; } = new MainViewModel();
+        public LoginViewModel ViewModel { get; } = new LoginViewModel();
 
-        public MainPage()
+        public LoginPage()
         {
             InitializeComponent();
         }
