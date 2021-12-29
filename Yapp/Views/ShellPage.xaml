@@ -3,7 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:i="using:Microsoft.Xaml.Interactivity">
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    NavigationCacheMode="Disabled">
 
     <i:Interaction.Behaviors>
         <ic:EventTriggerBehavior EventName="Loaded">
@@ -12,7 +13,13 @@
     </i:Interaction.Behaviors>
 
     <Grid>
-        <Frame x:Name="shellFrame" />
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Frame x:Name="shellFrame" Grid.Row="1" />
     </Grid>
     
 </Page>

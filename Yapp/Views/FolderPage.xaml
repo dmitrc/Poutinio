@@ -14,7 +14,7 @@
         </ic:EventTriggerBehavior>
     </i:Interaction.Behaviors>
     
-    <Grid>
+    <Grid Padding="24">
 
         <TextBlock
             VerticalAlignment="Center"
@@ -22,7 +22,7 @@
             Text="No files found :("
             Visibility="{x:Bind h:X.ShowIfNot(ViewModel.Files), Mode=OneWay}"/>
 
-        <GridView
+        <ListView
             HorizontalAlignment="Center"
             IsItemClickEnabled="True"
             ItemsSource="{x:Bind ViewModel.Files, Mode=OneWay}">
@@ -33,28 +33,36 @@
                 </ic:EventTriggerBehavior>
             </i:Interaction.Behaviors>
 
-            <GridView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Width" Value="400" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="16" />
+                    <Setter Property="Margin" Value="8" />
+                    <Setter Property="Background" Value="#22FFFFFF" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:File">
 
-                    <StackPanel 
-                        HorizontalAlignment="Stretch"
-                        Height="100"
-                        Width="200"
-                        Padding="8"
-                        Margin="8"
-                        BorderThickness="1" 
-                        CornerRadius="10" 
-                        BorderBrush="White">
+                    <Grid ColumnSpacing="16">
 
-                        <TextBlock Text="{x:Bind FileType}" />
-                        <TextBlock Text="{x:Bind Name}" MaxLines="3" TextWrapping="Wrap" />
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <FontIcon Glyph="{x:Bind h:X.GetFileIcon(FileType)}" Grid.Column="0" Opacity="0.25" FontSize="24" VerticalAlignment="Center" />
 
-                    </StackPanel>
+                        <TextBlock Text="{x:Bind Name}" Grid.Column="1" MaxLines="3" TextWrapping="Wrap" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" />
+
+                    </Grid>
 
                 </DataTemplate>
-            </GridView.ItemTemplate>
+            </ListView.ItemTemplate>
             
-        </GridView>
+        </ListView>
             
     </Grid>
     

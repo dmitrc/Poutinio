@@ -57,7 +57,7 @@ namespace Yapp.ViewModels
             // TODO: First request takes bloody forever and idk why
             try
             {
-                var accountResponse = await PutIoService.Get__Account_Info();
+                var accountResponse = await Task.Run(() => PutIoService.Get__Account_Info());
                 return !string.IsNullOrEmpty(accountResponse?.Info?.Username);
             }
             catch (Exception ex)
@@ -70,7 +70,7 @@ namespace Yapp.ViewModels
         {
             NeedsLogin = true;
 
-            var codeResponse = await PutIoService.Get__Oauth2_Oob_Code(5430, null);
+            var codeResponse = await Task.Run(() => PutIoService.Get__Oauth2_Oob_Code(5430, null));
             if (!string.IsNullOrEmpty(codeResponse?.Code))
             {
                 AuthCode = codeResponse.Code;
@@ -98,7 +98,7 @@ namespace Yapp.ViewModels
 
         private async void CheckForAuthenticationToken(object sender, object e)
         {
-            var tokenResponse = await PutIoService.Get__Oauth2_Oob_Code(AuthCode);
+            var tokenResponse = await Task.Run(() => PutIoService.Get__Oauth2_Oob_Code(AuthCode));
             if (!string.IsNullOrEmpty(tokenResponse?.OauthToken))
             {
                 _authPollTimer?.Stop();

@@ -59,5 +59,33 @@ namespace Yapp.Helpers
         {
             return ShowIfNot(If(c));
         }
+
+        public static string GetFileIcon(string type)
+        {
+            if (type == "FOLDER")
+            {
+                return "\uE8B7";
+            }
+            else if (type == "AUDIO")
+            {
+                return "\uE8D6";
+            }
+            else if (type == "VIDEO")
+            {
+                return "\uE768";
+            }
+            else if (type == "IMAGE")
+            {
+                return "\uE722";
+            }
+            else if (type == "ARCHIVE")
+            {
+                return "\uE8F1";
+            }
+            else // FILE, SWF, PDF, TEXT
+            {
+                return "\uE7C3";
+            }
+        }
     }
 }

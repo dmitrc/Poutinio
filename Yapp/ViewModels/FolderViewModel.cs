@@ -45,7 +45,7 @@ namespace Yapp.ViewModels
 
         private async Task OnLoaded()
         {
-            var files = await PutIoService.Get__Files_List(ParentId);
+            var files = await Task.Run(() => PutIoService.Get__Files_List(ParentId));
             if ((files?.Files?.Length ?? 0) > 0)
             {
                 Files = new ObservableCollection<File>(files.Files);
@@ -65,7 +65,7 @@ namespace Yapp.ViewModels
             }
             else if (file.FileType == "VIDEO")
             {
-                var url = await PutIoService.Get__Files_Url(file.Id);
+                var url = await Task.Run(() => PutIoService.Get__Files_Url(file.Id));
                 if (url?.Url != null)
                 {
                     NavigationService.Navigate<PlayerPage>(url.Url);
