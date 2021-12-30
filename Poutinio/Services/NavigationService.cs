@@ -3,6 +3,7 @@ using Poutinio.Core.Services;
 using Poutinio.Views;
 using System;
 using System.Collections.Generic;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace Poutinio.Services
@@ -23,7 +24,17 @@ namespace Poutinio.Services
 
         public void Init(Frame frame)
         {
+            if (_frame != null) return;
+
             _frame = frame;
+
+            var systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+            systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            systemNavigationManager.BackRequested += (s, e) =>
+            {
+                e.Handled = GoBack();
+            };
+
         }
 
         public bool GoBack()

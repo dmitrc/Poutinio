@@ -9,6 +9,7 @@ using Poutinio.Core.Services;
 using Poutinio.Services;
 using Poutinio.Core.ViewModels;
 using Poutinio.Core.Models;
+using Windows.UI.ViewManagement;
 
 namespace Poutinio
 {
@@ -38,21 +39,35 @@ namespace Poutinio
                 .BuildServiceProvider());
 
             InitializeComponent();
+            RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
 
             _activationService = new Lazy<ActivationService>(CreateActivationService);
         }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            if (!args.PrelaunchActivated)
+            InitializeApp();
+
+            if (!e.PrelaunchActivated)
             {
-                await ActivationService.ActivateAsync(args);
+                await ActivationService.ActivateAsync(e);
             }
         }
 
-        protected override async void OnActivated(IActivatedEventArgs args)
+        protected override async void OnActivated(IActivatedEventArgs e)
         {
-            await ActivationService.ActivateAsync(args);
+            var isLaunched = e.PreviousExecutionState == ApplicationExecutionState.Running || e.PreviousExecutionState == ApplicationExecutionState.Suspended;
+            if (!isLaunched)
+            {
+                InitializeApp();
+            }
+
+            await ActivationService.ActivateAsync(e);
+        }
+
+        private void InitializeApp()
+        {
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
         }
 
         private ActivationService CreateActivationService()
