@@ -1,0 +1,68 @@
+﻿<Page
+    x:Class="Poutinio.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:i="using:Microsoft.Xaml.Interactivity" 
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:h="using:Poutinio.Helpers"
+    NavigationCacheMode="Disabled"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <Grid>
+
+        <ProgressRing
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Width="64"
+            Height="64"
+            IsActive="{x:Bind h:X.Not(ViewModel.NeedsLogin), Mode=OneWay}"
+            Visibility="{x:Bind h:X.ShowIfNot(ViewModel.NeedsLogin), Mode=OneWay}" />
+
+        <Grid 
+            x:Name="loginGrid"
+            x:Load="{x:Bind ViewModel.NeedsLogin, Mode=OneWay}" 
+            Visibility="{x:Bind h:X.ShowIf(ViewModel.NeedsLogin), Mode=OneWay}" 
+            Background="Black">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                FontSize="24"
+                Margin="0 0 0 16">
+
+                <Run Text="Navigate to" />
+                <Run Text="put.io/link" FontSize="32" FontWeight="SemiBold" />
+                <Run Text="and enter this code:" />
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="2"
+                Visibility="{x:Bind h:X.ShowIf(ViewModel.AuthCode), Mode=OneWay}"
+                HorizontalAlignment="Center"
+                FontSize="128"
+                FontWeight="Bold"
+                Text="{x:Bind ViewModel.AuthCode, Mode=OneWay}" />
+
+            <ProgressRing
+                Grid.Row="2"
+                Visibility="{x:Bind h:X.ShowIfNot(ViewModel.AuthCode), Mode=OneWay}"
+                IsActive="{x:Bind h:X.IfNot(ViewModel.AuthCode), Mode=OneWay}"
+                Width="64"
+                Height="64" />
+        </Grid>
+        
+    </Grid>
+</Page>
