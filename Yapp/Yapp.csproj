@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="Helpers\Singleton.cs" />
     <Compile Include="Helpers\XamlHelper.cs" />
+    <Compile Include="Models\PathItem.cs" />
     <Compile Include="Models\PutIO\AccountInfo.cs" />
     <Compile Include="Models\PutIO\AccountSettings.cs" />
     <Compile Include="Models\PutIO\Config.cs" />
@@ -187,14 +188,14 @@
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\FolderViewModel.cs" />
+    <Compile Include="ViewModels\ExplorerViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FolderPage.xaml.cs">
-      <DependentUpon>FolderPage.xaml</DependentUpon>
+    <Compile Include="Views\ExplorerPage.xaml.cs">
+      <DependentUpon>ExplorerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellPage.xaml.cs">
       <DependentUpon>ShellPage.xaml</DependentUpon>
@@ -229,7 +230,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FolderPage.xaml">
+    <Page Include="Views\ExplorerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -83,7 +83,7 @@ namespace Yapp.ViewModels
             NeedsLogin = false;
 
             // TODO: Resolve navigation by ViewModel
-            NavigationService.Navigate<FolderPage>();
+            NavigationService.Navigate<ExplorerPage>();
 
             NavigationService.Pop();
         }
