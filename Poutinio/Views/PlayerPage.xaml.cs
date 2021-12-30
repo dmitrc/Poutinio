@@ -1,17 +1,13 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Poutinio.Core.ViewModels;
-using LibVLCSharp.Platforms.UWP;
-using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using Windows.Media.Core;
 
 namespace Poutinio.Views
 {
     public sealed partial class PlayerPage : Page
     {
-        private Uri _uri;
-
-        public PlayerViewModel ViewModel { get; } = Ioc.Default.GetService<PlayerViewModel>();
+        private MediaSource _mediaSource;
 
         public PlayerPage()
         {
@@ -21,12 +17,26 @@ namespace Poutinio.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            _uri = e.Parameter as Uri;
+            
+            if (e.Parameter is Uri uri)
+            {
+                _mediaSource = MediaSource.CreateFromUri(uri);
+                mpe.Source = _mediaSource;
+            }
         }
 
-        private void OnInitialized(object sender, InitializedEventArgs e)
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            ViewModel.Init(_uri, e.SwapChainOptions);
+            base.OnNavigatedFrom(e);
+            mpe.MediaPlayer.Pause();
+
+            _mediaSource?.Dispose();
+            mpe.Source = _mediaSource = null;
+        }
+
+        private MediaSource GetMediaSource(Uri uri)
+        {
+            return MediaSource.CreateFromUri(uri);
         }
     }
 }

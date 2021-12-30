@@ -11,6 +11,7 @@ namespace Poutinio.Views
         public LoginPage()
         {
             InitializeComponent();
+            DataContext = ViewModel;
         }
     }
 }
