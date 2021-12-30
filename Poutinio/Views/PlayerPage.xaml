@@ -24,6 +24,10 @@
 
         <lvs:VideoView MediaPlayer="{x:Bind ViewModel.MediaPlayer, Mode=OneWay}" Grid.RowSpan="2" Initialized="OnInitialized" />
 
+        <Grid Grid.RowSpan="2" Background="#AA000000" Visibility="{x:Bind h:X.ShowIf(ViewModel.IsBuffering), Mode=OneWay}">
+            <ProgressRing Width="64" Height="64" VerticalAlignment="Center" HorizontalAlignment="Center" IsActive="{x:Bind ViewModel.IsBuffering, Mode=OneWay}" />
+        </Grid>
+
         <Grid Background="#88000000" ColumnSpacing="20" Grid.Row="1" Padding="10">
 
             <Grid.RowDefinitions>
@@ -39,7 +43,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Row="0" Grid.ColumnSpan="5" Background="DarkCyan" Height="4" HorizontalAlignment="Stretch">
+            <Border Grid.Row="0" Grid.ColumnSpan="5" Background="{StaticResource SystemAccentColor}" Height="4" Margin="0 0 0 8" HorizontalAlignment="Stretch">
                 <Border.RenderTransform>
                     <ScaleTransform ScaleX="{x:Bind ViewModel.Position, Mode=OneWay}" />
                 </Border.RenderTransform>

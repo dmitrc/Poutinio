@@ -30,6 +30,7 @@ namespace Poutinio
                 new ServiceCollection()
                 .AddSingleton<INavigationService, NavigationService>()
                 .AddSingleton<ISettingsService, SettingsService>()
+                .AddSingleton<IDispatcherService, DispatcherService>()
                 .AddSingleton(RestService.For<IPutIoService>(PutIoHost, RefitSettings))
                 .AddTransient<LoginViewModel>()
                 .AddTransient<ExplorerViewModel>()

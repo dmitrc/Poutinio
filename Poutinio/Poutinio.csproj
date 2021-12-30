@@ -132,6 +132,7 @@
     <Compile Include="Helpers\Singleton.cs" />
     <Compile Include="Helpers\XamlHelper.cs" />
     <Compile Include="Services\ActivationService.cs" />
+    <Compile Include="Services\DispatcherService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>

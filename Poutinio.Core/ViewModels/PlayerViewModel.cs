@@ -2,11 +2,14 @@
 using LibVLCSharp.Shared;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using Poutinio.Core.Services;
 
 namespace Poutinio.Core.ViewModels
 {
     public class PlayerViewModel : ObservableObject
     {
+        private readonly IDispatcherService _dispatcherService;
+
         private LibVLC _libVLC;
 
         private MediaPlayer _mediaPlayer;
@@ -14,6 +17,13 @@ namespace Poutinio.Core.ViewModels
         {
             get => _mediaPlayer;
             set => SetProperty(ref _mediaPlayer, value);
+        }
+
+        private bool _isBuffering;
+        public bool IsBuffering
+        {
+            get => _isBuffering;
+            set => SetProperty(ref _isBuffering, value);
         }
 
         private bool _isPlaying;
@@ -52,8 +62,9 @@ namespace Poutinio.Core.ViewModels
         public ICommand JumpForwardCommand => _jumpForwardCommand ?? (_jumpForwardCommand = new RelayCommand(OnJumpForward));
 
 
-        public PlayerViewModel()
+        public PlayerViewModel(IDispatcherService dispatcherService)
         {
+            _dispatcherService = dispatcherService;
         }
 
         ~PlayerViewModel()
@@ -66,7 +77,9 @@ namespace Poutinio.Core.ViewModels
             if (uri == null) return;
 
             _libVLC = new LibVLC(enableDebugLogs: true, swapChainOptions);
-            MediaPlayer = new MediaPlayer(_libVLC);
+            using var media = new Media(_libVLC, uri);
+
+            MediaPlayer = new MediaPlayer(media) { EnableHardwareDecoding = true };
 
             MediaPlayer.EncounteredError += (s, e) =>
             {
@@ -75,26 +88,45 @@ namespace Poutinio.Core.ViewModels
 
             MediaPlayer.Paused += (s, e) =>
             {
-                IsPlaying = false;
+                _dispatcherService.RunOnUiThread(() =>
+                {
+                    IsPlaying = false;
+                });
             };
 
             MediaPlayer.Playing += (s, e) =>
             {
-                IsPlaying = true;
+                _dispatcherService.RunOnUiThread(() =>
+                {
+                    IsPlaying = true;
+                });
             };
 
             MediaPlayer.PositionChanged += (s, e) =>
             {
-                Position = e.Position;
+                _dispatcherService.RunOnUiThread(() =>
+                {
+                    Position = e.Position;
+                });
             };
 
             MediaPlayer.TimeChanged += (s, e) =>
             {
-                Time = e.Time;
+                _dispatcherService.RunOnUiThread(() =>
+                {
+                    Time = e.Time;
+                });
             };
 
-            using var media = new Media(_libVLC, uri);
-            MediaPlayer.Play(media);
+            MediaPlayer.Buffering += (s, e) =>
+            {
+                _dispatcherService.RunOnUiThread(() =>
+                {
+                    IsBuffering = e.Cache < 100;
+                });
+            };
+
+            MediaPlayer.Play();
         }
 
         public void OnTogglePlay()
