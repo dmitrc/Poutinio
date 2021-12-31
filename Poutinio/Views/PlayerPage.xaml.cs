@@ -28,15 +28,10 @@ namespace Poutinio.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            mpe.MediaPlayer.Pause();
 
+            mpe.MediaPlayer.Pause();
             _mediaSource?.Dispose();
             mpe.Source = _mediaSource = null;
-        }
-
-        private MediaSource GetMediaSource(Uri uri)
-        {
-            return MediaSource.CreateFromUri(uri);
         }
     }
 }

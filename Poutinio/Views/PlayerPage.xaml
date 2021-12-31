@@ -10,15 +10,15 @@
         <MediaPlayerElement
             x:Name="mpe"
             AreTransportControlsEnabled="True" 
-            IsFullWindow="True"
             AutoPlay="True">
 
             <MediaPlayerElement.TransportControls>
                 <MediaTransportControls
-                    IsFullWindowButtonVisible="False"
                     IsVolumeButtonVisible="False"
                     IsZoomButtonVisible="False"  />
             </MediaPlayerElement.TransportControls>
+            
+            <!--TODO: Implement custom?--> 
             
         </MediaPlayerElement>
 

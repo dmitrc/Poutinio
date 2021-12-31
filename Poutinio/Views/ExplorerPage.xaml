@@ -23,66 +23,80 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ItemsControl
-            Grid.Row="0"
-            IsTabStop="False"
-            ItemsSource="{x:Bind ViewModel.Path, Mode=OneWay}">
-            
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="models:PathItem">
-                    <StackPanel Orientation="Horizontal">
-                        <Button Command="{Binding ElementName=root, Path=ViewModel.PathClickCommand}" CommandParameter="{x:Bind}"  Background="Transparent" Padding="4">
-                            <TextBlock Text="{x:Bind Name}" MaxWidth="150" TextTrimming="CharacterEllipsis" />
-                        </Button>
-                        <TextBlock Text=">" Margin="4 0" VerticalAlignment="Center" Opacity="0.25" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+        <ScrollViewer x:Name="pathScrollViewer" Grid.Row="0" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden" Background="#11FFFFFF" >
+            <ItemsControl IsTabStop="False" ItemsSource="{x:Bind ViewModel.Path, Mode=OneWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:PathItem">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Command="{Binding ElementName=root, Path=ViewModel.PathClickCommand}" CommandParameter="{x:Bind}"  Background="Transparent" Padding="4" Loaded="OnPathItemLoaded">
+                                <TextBlock Text="{x:Bind Name}" MaxWidth="380" TextTrimming="CharacterEllipsis" />
+                            </Button>
+                            <TextBlock Text=">" Margin="4 0" VerticalAlignment="Center" Opacity="0.25" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Padding="16 8" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" Padding="16 8" Background="#11FFFFFF" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
 
-        </ItemsControl>
+        <ScrollViewer Grid.Row="1" Margin="32">
+            <ItemsControl
+                IsTabStop="False"
+                HorizontalAlignment="Center"
+                ItemsSource="{x:Bind ViewModel.Files, Mode=OneWay}">
 
-        <ItemsControl
-            Grid.Row="1"
-            IsTabStop="False"
-            HorizontalAlignment="Center"
-            Margin="32"
-            ItemsSource="{x:Bind ViewModel.Files, Mode=OneWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:File">
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="models:File">
+                        <Button Command="{Binding ElementName=root, Path=ViewModel.FileClickCommand}" CommandParameter="{x:Bind}" Background="#22FFFFFF" Width="400" Padding="16" HorizontalContentAlignment="Stretch">
+                            <Grid ColumnSpacing="16">
 
-                    <Button Command="{Binding ElementName=root, Path=ViewModel.FileClickCommand}" CommandParameter="{x:Bind}" Background="#22FFFFFF" Width="400" Padding="16" HorizontalContentAlignment="Stretch">
-                        <Grid ColumnSpacing="16">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
                         
-                            <FontIcon Glyph="{x:Bind h:X.GetFileIcon(FileType)}" Grid.Column="0" Opacity="0.25" FontSize="24" VerticalAlignment="Center" />
+                                <FontIcon Glyph="{x:Bind h:X.GetFileIcon(FileType)}" Grid.Column="0" Opacity="0.25" FontSize="24" VerticalAlignment="Center" />
 
-                            <TextBlock Text="{x:Bind Name}" Grid.Column="1" MaxLines="3" TextWrapping="Wrap" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                <TextBlock Text="{x:Bind Name}" Grid.Column="1" MaxLines="3" TextWrapping="Wrap" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" />
 
-                        </Grid>
-                    </Button>
+                            </Grid>
+                        </Button>
 
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
 
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Spacing="16" />
-                </ItemsPanelTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="16" />
+                    </ItemsPanelTemplate>
                 
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
-            
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <TextBlock
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Text="Nothing here :("
+            FontSize="32"
+            Visibility="{x:Bind h:X.ShowIf(ViewModel.IsEmpty), Mode=OneWay}" />
+
+        <ProgressRing
+            Width="64"
+            Height="64"
+            Grid.Row="1"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+            Visibility="{x:Bind h:X.ShowIf(ViewModel.IsLoading), Mode=OneWay}" />
+
     </Grid>
     
 </Page>

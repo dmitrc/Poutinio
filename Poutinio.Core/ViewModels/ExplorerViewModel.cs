@@ -14,6 +14,20 @@ namespace Poutinio.Core.ViewModels
         private readonly IPutIoService _putIoService;
         private readonly INavigationService _navigationService;
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value);
+        }
+
+        private bool _isEmpty;
+        public bool IsEmpty
+        {
+            get => _isEmpty;
+            set => SetProperty(ref _isEmpty, value);
+        }
+
         private IList<File> _files;
         public IList<File> Files
         {
@@ -62,11 +76,15 @@ namespace Poutinio.Core.ViewModels
 
             Path.Add(pathItem);
             Files = null;
+            IsEmpty = false;
+            IsLoading = true;
 
             var files = await GetFiles(pathItem);
 
             pathItem.CachedFiles = files;
             Files = files;
+            IsEmpty = (files?.Count ?? 0) == 0;
+            IsLoading = false;
         }
 
         private async Task<bool> GoBack()
@@ -78,8 +96,14 @@ namespace Poutinio.Core.ViewModels
                 Path.RemoveAt(count - 1);
 
                 Files = null;
+                IsEmpty = false;
+                IsLoading = true;
+
                 var files = await GetFiles(previousItem);
+
                 Files = files;
+                IsEmpty = (files?.Count ?? 0) == 0;
+                IsLoading = false;
 
                 return true;
             }
@@ -98,8 +122,14 @@ namespace Poutinio.Core.ViewModels
                 }
 
                 Files = null;
+                IsEmpty = false;
+                IsLoading = true;
+
                 var files = await GetFiles(pathItem);
+
                 Files = files;
+                IsLoading = false;
+                IsEmpty = (files?.Count ?? 0) == 0;
 
                 return true;
             }
@@ -116,6 +146,7 @@ namespace Poutinio.Core.ViewModels
             }
 
             var files = await Task.Run(() => _putIoService.Get__Files_List(pathItem.Id));
+
             return files?.Files;
         }
 
