@@ -35,6 +35,7 @@ namespace Poutinio
                 .AddSingleton(RestService.For<IPutIoService>(PutIoHost, RefitSettings))
                 .AddTransient<LoginViewModel>()
                 .AddTransient<ExplorerViewModel>()
+                .AddTransient<TransfersViewModel>()
                 .BuildServiceProvider());
 
             InitializeComponent();

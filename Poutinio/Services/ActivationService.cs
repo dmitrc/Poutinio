@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Poutinio.Activation;
 using Poutinio.Core.Models;
+using Poutinio.Helpers;
 
 namespace Poutinio.Services
 {
@@ -93,8 +94,7 @@ namespace Poutinio.Services
 
         private IEnumerable<ActivationHandler> GetActivationHandlers()
         {
-            //yield return Singleton<SchemeActivationHandler>.Instance;
-            return new List<ActivationHandler>();
+            yield return Singleton<MagnetUrlActivationHandler>.Instance;
         }
 
         private bool IsInteractive(object args)

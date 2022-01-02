@@ -14,7 +14,8 @@ namespace Poutinio.Services
         {
             { NavigationKind.Login, typeof(LoginPage) },
             { NavigationKind.Explorer, typeof(ExplorerPage) },
-            { NavigationKind.Player, typeof(PlayerPage) }
+            { NavigationKind.Player, typeof(PlayerPage) },
+            { NavigationKind.Transfers, typeof(TransfersPage) }
         };
 
         private Frame _frame;

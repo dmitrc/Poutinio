@@ -12,6 +12,9 @@ namespace Poutinio.Core.ViewModels
         private readonly ISettingsService _settingsService;
         private readonly INavigationService _navigationService;
 
+        private const NavigationKind _defaultNavigationKind = NavigationKind.Explorer;
+
+        private Action _onLoginAction;
         private bool _needsLogin;
         private string _authCode;
         private ICommand _loadedCommand;
@@ -35,6 +38,11 @@ namespace Poutinio.Core.ViewModels
             _putIoService = putIoService;
             _settingsService = settingsService;
             _navigationService = navigationService;
+        }
+
+        public void Init(Action onLoginAction)
+        {
+            _onLoginAction = onLoginAction;
         }
 
         private async Task OnLoaded()
@@ -83,8 +91,10 @@ namespace Poutinio.Core.ViewModels
         {
             NeedsLogin = false;
 
-            _navigationService.Navigate(NavigationKind.Explorer);
+            _navigationService.Navigate(_defaultNavigationKind);
             _navigationService.PopHistory();
+
+            _onLoginAction?.Invoke();
         }
 
         private async Task<string> PollAuthenticationToken(CancellationToken ct)

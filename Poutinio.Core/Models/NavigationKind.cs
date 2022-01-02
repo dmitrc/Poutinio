@@ -4,6 +4,7 @@
     {
         Login,
         Explorer,
+        Transfers,
         Player
     }
 }

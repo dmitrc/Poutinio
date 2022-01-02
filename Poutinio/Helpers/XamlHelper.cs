@@ -87,5 +87,20 @@ namespace Poutinio.Helpers
                 return "\uE7C3";
             }
         }
+
+        public static string Format(string s, object arg1)
+        {
+            return string.Format(s, arg1);
+        }
+
+        public static string Format(string s, object arg1, object arg2)
+        {
+            return string.Format(s, arg1, arg2);
+        }
+
+        public static string Format(string s, object arg1, object arg2, object arg3)
+        {
+            return string.Format(s, arg1, arg2, arg3);
+        }
     }
 }
